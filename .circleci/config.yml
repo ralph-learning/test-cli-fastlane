@@ -77,7 +77,8 @@ jobs:
             command: |
               fastlane apk
         - store_artifacts:
-            path: android/app/build/outputs/bundle
+            path: android/app/build/outputs
+
 # build_firebase:
 #      docker:
 #       - image: cimg/node:12.16
