@@ -70,7 +70,12 @@ jobs:
             name: build fastlane android
             path: android
             command: |
-              fastlane beta
+              fastlane aab
+        - run:
+            name: build fastlane android
+            path: android
+            command: |
+              fastlane apk
         - store_artifacts:
             path: android/app/build/outputs/bundle
 # build_firebase:
