@@ -31,6 +31,7 @@
     "ionicons": "^6.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
+    "wrangler": "^2.4.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -44,6 +45,7 @@
     "@angular/compiler-cli": "^14.0.0",
     "@angular/language-service": "^14.0.0",
     "@capacitor/cli": "4.4.0",
+    "@cloudflare/workers-types": "^4.20221111.1",
     "@ionic/angular-toolkit": "^6.0.0",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
