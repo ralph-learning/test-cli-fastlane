@@ -14,17 +14,17 @@ orbs:
 jobs:
   build_www:
     working_diurectory: ~/repo
-  docker:
-    - image: cimg/node:19.0
-  steps:
-    - checkout
-    - run:
-      name: install dependencies
-      command: npm install
-    - save_cache:
-        key: dependency-cache-{{ checksum "package-lock.json" }}
-        paths:
-          - ./node_modules
+    docker:
+      - image: cimg/node:19.0
+    steps:
+      - checkout
+      - run:
+        name: install dependencies
+        command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
 
   build_ionic:
     working_directory: ~/repo
