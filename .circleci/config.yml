@@ -22,7 +22,6 @@ jobs:
           command: "npm install"
 
   build_ionic:
-    working_directory: ~/repo
     docker:
       - image: cimg/node:19.0
     steps:
