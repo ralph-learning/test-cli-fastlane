@@ -4,6 +4,7 @@ workflows:
   version: 2.1
   build-and-deploy:
     jobs:
+      - build_www
       - build_ionic
       - build_android:
           requires:
@@ -11,6 +12,20 @@ workflows:
 orbs:
   android: circleci/android@2.1.2
 jobs:
+  build_www:
+    working_diurectory: ~/repo
+  docker:
+    - image: cimg/node:19.0
+  steps:
+    - checkout
+    - run:
+      name: install dependencies
+      command: npm install
+    - save_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+        paths:
+          - ./node_modules
+
   build_ionic:
     working_directory: ~/repo
     docker:
