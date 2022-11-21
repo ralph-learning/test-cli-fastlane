@@ -1,15 +1,12 @@
-
 version: 2.1
+
 workflows:
-  build-and-deploy:
+  deploy:
     jobs:
       - build_node
-      - deploy_cloudflare
-      - build_android
 
 jobs:
   build_node:
-    working_directory: ~/repo
     docker:
       - image: cimg/node:19.1.0
     steps:
@@ -21,71 +18,3 @@ jobs:
         key: dependency-cache-{{ checksum "package-lock.json" }}
         paths:
           - ./node_modules
-
-  deploy_cloudflare:
-    working_directory: ~/repo
-    docker:
-      - image: cimg/node:19.1.0
-    steps:
-      - checkout
-      - restore_chace:
-        key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-        name: node_modules_check
-        command: ls node_modules
-
-  build_android:
-      working_directory: ~/repo
-      docker:
-        - image: cimg/android:2022.09-node
-      steps:
-        - checkout
-        - run:
-            name: update-npm
-            command: "sudo npm install -g npm@8.19"
-        - restore_cache:
-            key: dependency-cache-{{ checksum "package-lock.json" }}
-        - run:
-            name: install-packages
-            command: npm install
-        - run:
-            name: install ionic cli
-            command: "sudo npm install -g @ionic/cli"
-        - save_cache:
-            key: dependency-cache-{{ checksum "package-lock.json" }}
-            paths:
-              - ./node_modules
-        - run:
-            name: build
-            command: ionic build --prod
-        - run:
-            name: sync capacitor
-            command: npx cap sync
-        - run:
-            name: build android
-            command: ionic capacitor build android
-        - run:
-            name: install ruby
-            command: sudo apt-get install ruby-full
-        - run:
-            name: install fastlane
-            command: |
-              sudo gem install fastlane -NV
-              fastlane -v
-        - run:
-            name: install depedencies
-            path: android
-            command: |
-              ./gradlew androidDependencies --debug
-        - run:
-            name: build fastlane android
-            path: android
-            command: |
-              fastlane aab
-        - run:
-            name: build fastlane android
-            path: android
-            command: |
-              fastlane apk
-        - store_artifacts:
-            path: android/app/build/outputs
