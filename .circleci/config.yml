@@ -1,14 +1,11 @@
 
 version: 2.1
 workflows:
-  version: 2.1
   build-and-deploy:
     jobs:
       - build_node
       - deploy_cloudflare
       - build_android
-orbs:
-  android: circleci/android@2.1.2
 
 jobs:
   build_node:
