@@ -4,22 +4,43 @@ workflows:
   version: 2.1
   build-and-deploy:
     jobs:
-      - build_ionic
-      - build_android:
-          requires:
-            - build_ionic
+      - build_node
+      - deploy_cloudflare
+      - build_android
 orbs:
   android: circleci/android@2.1.2
+
 jobs:
-  build_ionic:
+  build_node:
     working_directory: ~/repo
     docker:
-      - image: cimg/node:19.0
+      - image: cimg/node:19.1.0
     steps:
       - checkout
       - run:
-          name: view files
-          command: ls ~/repo/android
+        name: Install dependencies
+        command: npm install
+      - save_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+        paths:
+          - ./node_modules
+      - save_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+        paths:
+          - ./node_modules
+
+  deploy_cloudflare:
+    working_directory: ~/repo
+    docker:
+      - image: cimg/node:19.1.0
+    steps:
+      - checkout
+      - restore_chace:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+        name: node_modules check
+        command: ls node_modules
+
   build_android:
       working_directory: ~/repo
       docker:
@@ -50,9 +71,6 @@ jobs:
         - run:
             name: build android
             command: ionic capacitor build android
-        - run:
-            name: view files
-            command: ls ~/repo/android
         - run:
             name: install ruby
             command: sudo apt-get install ruby-full
