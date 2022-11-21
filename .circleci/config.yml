@@ -12,16 +12,16 @@ orbs:
   android: circleci/android@2.1.2
 jobs:
   build_www:
-    working_diurectory: ~/repo
     docker:
       - image: cimg/node:19.0
     steps:
       - checkout
       - run:
-          name: install_dependencies
+          name: install dependencies
           command: "npm install"
 
   build_ionic:
+    working_directory: ~/repo
     docker:
       - image: cimg/node:19.0
     steps:
