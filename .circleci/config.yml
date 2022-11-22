@@ -22,7 +22,6 @@ jobs:
     steps:
       - checkout
       - run: node --version
-      - run: sudo npm install angular-cli@latest -g
       - run:
           name: install-dependencies
           command: "npm install"
