@@ -16,7 +16,7 @@ jobs:
           command: 'npm run build'
       - run:
           name: 'deploy'
-          command: 'npx wrangler --version'
+          command: 'npx wrangler publish www'
 
   install-node:
     working_directory: ~/repo
@@ -37,5 +37,7 @@ workflows:
     jobs:
       - install-node
       - cloudflare-deploy:
+          context:
+            - CF_ACCOUNT_ID
           requires:
             - install-node
