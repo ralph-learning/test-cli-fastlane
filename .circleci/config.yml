@@ -24,6 +24,9 @@ jobs:
       - run:
           name: install-dependencies
           command: "npm install"
+    - run:
+          name: Install NPM
+          command: "sudo npm install -g npm@8.19"
       - run:
           name: install ionic cli
           command: "sudo npm install -g @ionic/cli"
