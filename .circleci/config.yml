@@ -5,6 +5,7 @@ orbs:
 
 jobs:
   cloudflare-deploy:
+    working_directory: ~/repo
     executor: node/default
     steps:
       - checkout
@@ -18,6 +19,7 @@ jobs:
           command: 'npx wrangler --version'
 
   install-node:
+    working_directory: ~/repo
     executor: node/default
     steps:
       - checkout
