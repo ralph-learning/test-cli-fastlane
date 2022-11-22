@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run: node --version
+      - run:
+        name: install dependencies
+        command: "npm install"
 
 workflows:
   node_test:
