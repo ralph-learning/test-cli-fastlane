@@ -1,16 +1,11 @@
 version: '2.1'
 
-orbs:
-  node: circleci/node@x.y
-
 jobs:
   install-node:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:17.9.1
     steps:
       - checkout
-      - node/install:
-        node-version: '16.13'
       - run: node --version
 
 workflows:
