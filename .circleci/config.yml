@@ -1,7 +1,7 @@
 version: '2.1'
 
 jobs:
-  deploy-cloudflare:
+  cloudflare-deploy:
     docker:
       - image: cimg/node:17.9.1
     steps:
@@ -9,9 +9,10 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
-          name: wrangler-version
+          name: 'deploy'
           command: 'wrangler --version'
-  setup-node:
+
+  install-node:
     docker:
       - image: cimg/node:17.9.1
     steps:
@@ -21,8 +22,8 @@ jobs:
           name: install-dependencies
           command: "npm install"
       - run:
-          name: install-chloudflare-CLI
-          command: "npm install wrangler"
+          name: wrangler-version
+          command: 'npm install wrangler'
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
@@ -31,6 +32,7 @@ jobs:
 workflows:
   node_test:
     jobs:
-      - deploy-cloudflare:
-        requires:
-          - setup-node
+      - install-node
+      - cloudflare-deploy:
+          requires:
+            - install-node
