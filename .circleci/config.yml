@@ -23,14 +23,8 @@ jobs:
       - checkout
       - run: node --version
       - run:
-          name: Install NPM
-          command: "sudo npm install -g npm@8.19"
-      - run:
           name: install-dependencies
           command: "npm install"
-      - run:
-          name: install ionic cli
-          command: "sudo npm install -g @ionic/cli"
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
