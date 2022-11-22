@@ -5,6 +5,11 @@ workflows:
     jobs:
       - build_www
       - build_ionic
+      - deploy_cloudflare:
+        context:
+          - CF_ACCOUNT_ID
+        requires:
+          - build_www
       - build_android:
           requires:
             - build_www
@@ -24,7 +29,22 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
-
+      - run:
+        name: install chloudflare CLI
+        command: npm install wrangler
+  deploy_cloudflare:
+    docker:
+      - image: cimg/node:19.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+        name: Run build
+        command: npm run build
+      - run:
+        name: Deploy to cloudflare
+        command: npx wrangler publish
   build_ionic:
     working_directory: ~/repo
     docker:
