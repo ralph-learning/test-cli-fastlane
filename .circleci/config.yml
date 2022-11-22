@@ -9,6 +9,9 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
+          name: 'build www'
+          command: 'npm run build'
+      - run:
           name: 'deploy'
           command: 'npx wrangler --version'
 
@@ -22,8 +25,8 @@ jobs:
           name: install-dependencies
           command: "npm install"
       - run:
-          name: wrangler-version
-          command: 'npm install wrangler'
+          name: install ionic cli
+          command: "sudo npm install -g @ionic/cli"
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
