@@ -41,6 +41,6 @@ workflows:
       - install-node
       - cloudflare-deploy:
           context:
-            - CF_ACCOUNT_ID
+            - cloudflare-envs
           requires:
             - install-node
