@@ -19,7 +19,7 @@ jobs:
           command: 'ls -la'
       - run:
           name: 'deploy'
-          command: 'npx wrangler publish www'
+          command: 'npx wrangler pages publish www'
 
   install-node:
     working_directory: ~/repo
