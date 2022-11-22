@@ -1,9 +1,11 @@
 version: '2.1'
 
+orbs:
+  node: circleci/node@5.0.2
+
 jobs:
   cloudflare-deploy:
-    docker:
-      - image: cimg/node:17.9.1
+    executor: node/default
     steps:
       - checkout
       - restore_cache:
@@ -16,8 +18,7 @@ jobs:
           command: 'npx wrangler --version'
 
   install-node:
-    docker:
-      - image: cimg/node:17.9.1
+    executor: node/default
     steps:
       - checkout
       - run: node --version
