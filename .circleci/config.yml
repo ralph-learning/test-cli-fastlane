@@ -15,11 +15,8 @@ jobs:
           name: 'build www'
           command: 'npm run build'
       - run:
-          name: 'check www'
-          command: 'ls -la'
-      - run:
           name: 'deploy'
-          command: 'npx wrangler pages publish www'
+          command: 'npx wrangler pages publish www --project-name test --branch main'
 
   install-node:
     working_directory: ~/repo
